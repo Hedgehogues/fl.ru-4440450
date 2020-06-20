@@ -1,4 +1,4 @@
-# installing 
+# installing
 
     pip install -r requirements
     
@@ -8,7 +8,12 @@ python3.7+
     
 # run
 
+    conda activate fl.ru-4440450
     python main.py
+
+For deactivate 
+
+    conda deactivate
 
 # Description
 
