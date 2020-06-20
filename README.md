@@ -8,6 +8,6 @@
 
 # Description
 
-domains.csv -- domains for passing to telegram
-existed.csv -- existed domains into telegram
-Research.ipynb -- jupyter notebook (development environment)
+* domains.csv -- domains for passing to telegram
+* existed.csv -- existed domains into telegram
+* Research.ipynb -- jupyter notebook (development environment)
