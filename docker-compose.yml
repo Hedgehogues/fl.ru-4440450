@@ -1,0 +1,10 @@
+version: '3'
+services:
+    parser:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+          - ./domains.csv:/app/domains.csv
+          - ./existed.csv:/app/existed.csv
+        network_mode: host
