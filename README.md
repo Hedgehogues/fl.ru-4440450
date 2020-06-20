@@ -2,6 +2,10 @@
 
     pip install -r requirements
     
+# Deps
+
+python3.7+
+    
 # run
 
     python main.py
