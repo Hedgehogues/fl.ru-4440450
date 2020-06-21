@@ -7,4 +7,4 @@ COPY . /app
 WORKDIR /app
 
 RUN pip install -r requirements
-CMD python3.7 main.py
+CMD PYTHONUNBUFFERED=0 python3.7 main.py
