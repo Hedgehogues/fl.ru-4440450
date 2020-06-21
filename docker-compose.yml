@@ -7,4 +7,5 @@ services:
         volumes:
           - ./domains.csv:/app/domains.csv
           - ./existed.csv:/app/existed.csv
+          - ./config.json:/app/config.json
         network_mode: host
