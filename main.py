@@ -6,12 +6,17 @@ import tqdm
 import io
 
 
-domains_filename = 'domains.csv'
-token = '1267284902:AAE7rfaQfyZnSs59V1xJVlvkw66r-smwQ6Q'
-username = 'bot_4440450_bot'
-chat_id = '126555500'
+with open('config.json') as fd:
+    config = json.load(fd)
+
+
+domains_filename = config['domains_filename']
+token = config['domains_filename']
+username = config['username']
+chat_id = config['chat_id']
+existed_domains = config['existed_domains']
+rkn_url = config['rkn_url']
 url_tlg = f"https://api.telegram.org/bot{token}/sendMessage"
-existed_domains = 'existed.csv'
 
 
 def get_rkn(url):
@@ -101,14 +106,15 @@ def dump_domains(fname, df, existed):
     print(f'execution (seconds): {(datetime.datetime.now() - t).total_seconds()}')
     return df
 
-stream = get_rkn('https://raw.githubusercontent.com/zapret-info/z-i/master/dump.csv')
+
+stream = get_rkn(rkn_url)
 df = read_csv(stream)
 domains = read_domains(domains_filename)
 existed = read_domains(existed_domains)
 df = transform_raw(df)
-dump_domains(existed_domains, df, existed)
 df = unique_domains(df)
 df = find_domains_not_exist(df, existed)
 df = find_domains_exist(df, domains)
+dump_domains(existed_domains, df, existed)
 values = df[[1,3,5]].values.tolist()
 send_to_tlg(url_tlg, chat_id, values)
