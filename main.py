@@ -86,8 +86,12 @@ def unique_domains(df):
 
 def send_to_tlg(url, chat_id, values):
     for item in tqdm.tqdm(values, desc='pass messages'):
+        time = datetime.datetime.strftime(datetime.datetime.now(), "%d.%m.%Y %H:%M:%S")
+        site = item[0]
+        task = item[1]
+        date = '.'.join(item[2].split('-')[::-1])
         data = {
-            'text': json.dumps(';'.join(item), ensure_ascii=False),
+            'text': f'{time} Сайт {site} - РКН. Дело: {task}. Дата решения: {date}',
             'chat_id': chat_id,
         }
         resp = requests.get(url, data=data)
@@ -98,10 +102,18 @@ def dump_domains(fname, df, existed):
     print('dump domains')
     t = datetime.datetime.now()
     df_existed = df.copy(deep=True)
-    df_existed = df_existed[~df_existed[1].isnull()]
+    df_existed = df_existed = df_existed[~df_existed[1].isnull()]
     domains = '\n'.join(list(set(df_existed[1].values.tolist()).union(existed)))
     with open(fname, 'w') as fd:
         fd.write(domains)
+    print(f'execution (seconds): {(datetime.datetime.now() - t).total_seconds()}')
+    return df
+
+
+def remove_domains_low_level(df):
+    print('dump domains')
+    t = datetime.datetime.now()
+    df[1] = df[1].apply(lambda el: el if type(el) == float else '.'.join(el.split('.')[-2:]))
     print(f'execution (seconds): {(datetime.datetime.now() - t).total_seconds()}')
     return df
 
@@ -111,6 +123,7 @@ df = read_csv(stream)
 domains = read_domains(domains_filename)
 existed = read_domains(existed_domains)
 df = transform_raw(df)
+df = remove_domains_low_level(df)
 df = unique_domains(df)
 df = find_domains_not_exist(df, existed)
 df = find_domains_exist(df, domains)
