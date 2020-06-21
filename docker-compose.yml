@@ -5,7 +5,5 @@ services:
             context: .
             dockerfile: Dockerfile
         volumes:
-          - ./domains.csv:/app/domains.csv
-          - ./existed.csv:/app/existed.csv
-          - ./config.json:/app/config.json
+          - ./:/app/
         network_mode: host
