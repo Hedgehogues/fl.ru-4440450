@@ -11,8 +11,7 @@ with open('config.json') as fd:
 
 
 domains_filename = config['domains_filename']
-token = config['domains_filename']
-username = config['username']
+token = config['token']
 chat_id = config['chat_id']
 existed_domains = config['existed_domains']
 rkn_url = config['rkn_url']
